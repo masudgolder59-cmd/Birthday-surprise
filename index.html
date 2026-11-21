@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday Bestie! 🎉</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Sacramento&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
+      color: #333;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    /* Card Wrapper */
+    .slide-container {
+      width: 90%;
+      max-width: 600px;
+      height: 75vh;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      z-index: 2;
+    }
+
+    /* Slide Content */
+    .slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: calc(100% - 70px);
+      padding: 25px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
+      transform: translateX(50px);
+    }
+
+    .slide.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateX(0);
+    }
+
+    /* Headings */
+    h1 {
+      font-family: 'Sacramento', cursive;
+      font-size: 3.2rem;
+      color: #d63384;
+      margin-bottom: 10px;
+    }
+    h2 {
+      color: #d63384;
+      font-size: 1.8rem;
+      margin-bottom: 15px;
+    }
+
+    /* Button Controls */
+    .navigation-bar {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 70px;
+      background: #fafafa;
+      border-top: 1px solid #eee;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0 20px;
+    }
+
+    .nav-btn {
+      background: #d63384;
+      color: white;
+      border: none;
+      padding: 10px 22px;
+      font-size: 0.95rem;
+      border-radius: 20px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(214, 51, 132, 0.3);
+      transition: background 0.2s;
+    }
+    .nav-btn:disabled {
+      background: #cccccc;
+      box-shadow: none;
+      cursor: not-allowed;
+    }
+
+    /* Polaroid Photo & Video */
+    .polaroid {
+      background: white;
+      padding: 12px 12px 20px 12px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+      border: 1px solid #eee;
+      border-radius: 6px;
+      width: 100%;
+      max-width: 280px;
+    }
+    .polaroid img, .polaroid video {
+      width: 100%;
+      height: 380px;
+      object-fit: cover;
+      border-radius: 4px;
+    }
+    .polaroid p {
+      font-family: 'Sacramento', cursive;
+      font-size: 1.5rem;
+      margin-top: 10px;
+      color: #444;
+    }
+
+    /* Reason Box */
+    .reason-box {
+      background: #fff5f8;
+      border-left: 4px solid #d63384;
+      padding: 15px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      color: #555;
+      margin: 10px 0;
+      text-align: left;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    /* Password Input & Secret Note */
+    input[type="password"] {
+      width: 80%;
+      padding: 10px 15px;
+      border: 2px solid #ddd;
+      border-radius: 20px;
+      outline: none;
+      font-size: 0.95rem;
+      margin-bottom: 12px;
+      text-align: center;
+    }
+    .secret-message {
+      margin-top: 15px;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      color: #444;
+      background: #fff5f8;
+      padding: 20px;
+      border-radius: 8px;
+      max-height: 200px;
+      overflow-y: auto;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    footer {
+      position: absolute;
+      bottom: 10px;
+      font-size: 0.75rem;
+      color: #777;
+      z-index: 2;
+    }
+
+    .cake-emoji {
+      font-size: 5.5rem;
+      margin-bottom: 15px;
+      display: inline-block;
+      animation: bounce 2s infinite;
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+  <!-- Audio Element for Background Music -->
+  <audio id="bgMusic" loop preload="auto">
+    <source src="audio1.m4a" type="audio/mpeg">
+  </audio>
+
+  <div class="slide-container">
+
+    <!-- SLIDE 1: Welcome Screen -->
+    <div class="slide active">
+      <div class="cake-emoji">🎂</div>
+      <h1>Happiest Birthday sanaaaa..!!! 🎉</h1>
+      <p style="color: #666; margin-top: 10px;">Yeh chota sa surprise special tere liye banaya hai.</p>
+      <p style="margin-top: 20px; font-weight: 600; color: #d63384;">Next dabao aage dekhne ke liye ➔</p>
+    </div>
+
+    <!-- SLIDE 2: Why You're The Best -->
+    <div class="slide">
+      <div class="cake-emoji">🎂</div>
+      <h2>Why I consider u as my besti ...?</h2>
+      <div class="reason-box">
+        <b>1. </b> Because you're not just a friend to me, you're someone I can talk to without thinking twice. I can share my random thoughts and laugh over silly things.
+      </div>
+      <div class="reason-box">
+        <b>2. Best Secret Keeper:</b> Meri saari stupid baatein aur secrets sirf tere tak rehna chahiye 
+      </div>
+    </div>
+
+    <!-- SLIDE 3: Password Screen -->
+    <div class="slide">
+      <h2>Surprise Vault 🔒</h2>
+      <p style="font-size: 0.85rem; color: #666; margin-bottom: 15px;">Aage ki memories aur secret note dekhne ke liye password dalo (Hint: <b>Ur Name..</b>):</p>
+      
+      <input type="password" id="passInput" placeholder="Enter Password">
+      <button class="nav-btn" onclick="unlockSecret()" style="margin-top: 5px;">Unlock Surprise 🔓</button>
+    </div>
+
+    <!-- SLIDE 4: Final Secret Note -->
+    <div class="slide">
+      <h2>Special Note 💌</h2>
+      <div class="secret-message">
+        <p><b>Dear chana..,</b></p>
+        <p style="margin-top: 8px;">Happiest Birthday meri bestie! 🎂❤️✨
+
+Allah tumhari zindagi ko hamesha khushiyon se bhar de, tumhari har dua qubool kare aur tumhe har buri nazar aur pareshani se mehfooz rakhe. 🤲🏻❤️
+
+Tum hamesha aise hi haste rehna, khush rehna aur apni life mein khoob tarakki karna. Allah tumhe woh sab kuch de jo tumhare dil mein hai aur jiski tumne kabhi dua maangi ho.
+
+Bas ek baat, kabhi apni smile mat khona aur hamesha aisi hi pagal rehna 😂❤️
+
+Allah tumhe duniya aur aakhirat dono mein kamyabi de.
+
+Once again, Happiest Birthday Bestie! 🫶🏻🎀</p>
+      </div>
+    </div>
+    <!-- SLIDE 4: Final Secret Note -->
+    <div class="slide">
+      <h2>Special Note 💌</h2>
+      <div class="secret-message">
+        <p><b><I>Dear Shaanaaa,</I></b></p>
+        <p style="margin-top: 8px;"><b>•   </b> I'm really glad that I have you in my life. I just hope our bond stays the same forever. 🥹❤️<br><b>•</b>       "Maybe we're not related by blood, but you're definitely one of the people I never want to lose." 🫶🏻</p>
+      </div>
+      </div>
+    <!-- SLIDE 5: Memory 1 -->
+    <div class="slide">
+      <h2> 📸</h2>
+      <div class="polaroid">
+        <img src="photo1.jpg" alt="Memory 1">
+        <p></p>
+      </div>
+    </div>
+
+    <!-- SLIDE 6: Memory 2 -->
+    <div class="slide">
+      <h2>📸</h2>
+      <div class="polaroid">
+        <img src="photo2.jpg" alt="Memory 2">
+        <p>✨</p>
+      </div>
+    </div>
+
+    <!-- SLIDE 7: Memory 3 -->
+    <div class="slide">
+      <h2>😁</h2>
+      <div class="polaroid">
+        <img src="photo3.jpg" alt="Memory 2">
+        <p>same as this 😜</p>
+      </div>
+    </div>
+    
+    <!-- SLIDE 8: Memory 4 (Video) -->
+    <div class="slide">
+      <h2>🎬</h2>
+      <div class="polaroid">
+        <video src="video1.mp4" controls autoplay loop muted></video>
+        <p>Fun Times 🤣</p>
+      </div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <div class="navigation-bar">
+      <button class="nav-btn" id="nextBtn" onclick="nextSlide()">Next ➔</button>
+    </div>
+
+  </div>
+
+  <footer>with love from Masud 🎁</footer>
+
+  <script>
+    let currentSlide = 0;
+    let isUnlocked = false;
+    const slides = document.querySelectorAll('.slide');
+    const nextBtn = document.getElementById('nextBtn');
+    const bgMusic = document.getElementById('bgMusic');
+    let isMusicPlaying = false;
+
+    // Continuous Confetti Rain
+    function startContinuousConfetti() {
+      setInterval(() => {
+        confetti({
+          particleCount: 3,
+          startVelocity: 5,
+          ticks: 1000,
+          origin: {
+            x: Math.random(),
+            y: -0.1
+          },
+          colors: ['#d63384', '#fbc2eb', '#a6c1ee', '#ffd166', '#06d6a0'],
+          gravity: 0.4,
+          scalar: 1.0,
+          drift: Math.random() - 0.5
+        });
+      }, 150);
+    }
+
+    window.addEventListener('load', () => {
+      startContinuousConfetti();
+    });
+
+    function nextSlide() {
+      if (!isMusicPlaying) {
+        bgMusic.play().catch(e => console.log("Audio autoplay prevented:", e));
+        isMusicPlaying = true;
+      }
+
+      // Password wall check on Slide 3 (Index 2)
+      if (currentSlide === 2 && !isUnlocked) {
+        alert('Pehle password dalo aage ke slides unlock karne ke liye! 😜');
+        return;
+      }
+
+      if (currentSlide < slides.length - 1) {
+        slides[currentSlide].classList.remove('active');
+        currentSlide++;
+        slides[currentSlide].classList.add('active');
+
+        triggerBurst();
+
+        if (currentSlide === slides.length - 1) {
+          nextBtn.disabled = true;
+        }
+      }
+    }
+
+    function triggerBurst() {
+      confetti({
+        particleCount: 150,
+        spread: 150,
+        origin: { y: 0.5 },
+        gravity: 1.0,
+        scalar: 1.5
+      });
+    }
+
+    function unlockSecret() {
+      const input = document.getElementById('passInput').value;
+
+      if (input.toLowerCase() === 'shaanaa..pglll') {
+        isUnlocked = true;
+        triggerBurst();
+        alert('Correct Password! 🎉 Sabhi secret slides unlock ho gaye hain!');
+        nextSlide(); // Password sahi hone par automatic next slide par le jayega
+      } else {
+        alert('Galat password! Hint padho 😜');
+      }
+    }
+  </script>
+</body>
+</html>
